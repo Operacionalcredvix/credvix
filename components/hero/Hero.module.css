@@ -1,0 +1,74 @@
+/* Estilos para o componente Hero.jsx */
+
+.heroSwiper {
+  width: 100%;
+  height: 500px; /* Altura padrão para mobile */
+}
+
+@media (min-width: 768px) {
+  .heroSwiper {
+    height: 550px; /* Altura maior para telas de desktop */
+  }
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden; /* Garante que o parallax não "vaze" */
+}
+
+/* Camada escura sobre a imagem para melhor legibilidade do texto/botão */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+  z-index: 1;
+}
+
+.slideBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.slideContent {
+  position: relative;
+  z-index: 2;
+  padding: 1rem;
+}
+
+/* Estilos dos botões de navegação (setas) */
+.navButton {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navButton:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+/* Estilo da barra de progresso da paginação */
+.pagination {
+  position: absolute;
+  bottom: 20px !important; /* !important para sobrescrever o estilo padrão */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 400px;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+}

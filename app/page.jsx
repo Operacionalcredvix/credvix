@@ -1,4 +1,4 @@
-import Hero from '../components/Hero';
+import Hero from '../components/hero/Hero';
 import NossaHistoria from '../components/NossaHistoria'; // Importa o novo componente
 
 // Componente para a seção "Nossos Valores" para manter o código organizado
