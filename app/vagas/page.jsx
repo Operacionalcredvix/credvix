@@ -1,6 +1,6 @@
 // app/vagas/page.jsx
 import { supabase } from '../../lib/supabaseClient'; // Usando caminho relativo
-import JobList from '../components/JobList'; // Usando caminho relativo
+import JobList from '../../components/JobList'; // Usando caminho relativo
 
 // Função que busca os dados no servidor
 async function getActiveJobs() {

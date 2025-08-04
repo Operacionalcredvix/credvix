@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabaseClient'; // Importa nosso cliente Supabase
+import { supabase } from '../lib/supabaseClient'; // Importa nosso cliente Supabase
 
 export default function ApplicationModal({ isOpen, onClose, jobInfo }) {
   // Estados para controlar os dados do formulário
