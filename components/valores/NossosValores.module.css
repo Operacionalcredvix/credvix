@@ -1,0 +1,62 @@
+/* Estilos para o componente NossosValores.jsx */
+
+.valueCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #f9fafb; /* bg-gray-50 */
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.valueCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.valueIcon {
+  margin-bottom: 1rem;
+  /* Ícones com fundo para destaque */
+  background-color: rgba(243, 112, 33, 0.1); /* Cor laranja com 10% de opacidade */
+  color: #F37021; /* Cor laranja principal */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Para o tamanho dos SVGs dentro do círculo */
+.valueIcon svg {
+    width: 2rem;  /* h-8 w-8 */
+    height: 2rem;
+}
+
+/* Novo estilo para a grelha de valores */
+.valuesGrid {
+  display: grid;
+  gap: 2rem; /* Equivalente a gap-8 do Tailwind */
+  max-width: 72rem; /* Equivalente a max-w-6xl */
+  margin-left: auto;
+  margin-right: auto;
+  
+  /* Padrão para mobile: 2 colunas */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Para ecrãs de tablet (médios): 3 colunas */
+@media (min-width: 768px) {
+  .valuesGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Para ecrãs de desktop (grandes): 5 colunas */
+@media (min-width: 1024px) {
+  .valuesGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
