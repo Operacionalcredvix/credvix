@@ -1,6 +1,6 @@
 import './globals.css';
-import Header from '../components/Header'; // Caminho corrigido
-import Footer from '../components/Footer'; // Caminho corrigido
+import Header from '../components/Header'; 
+import Footer from '../components/Footer'; 
 
 export const metadata = {
   title: 'Credvix & Help! - Crédito Consignado',
