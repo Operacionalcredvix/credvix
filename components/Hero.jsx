@@ -1,10 +1,10 @@
-'use client'; // <-- MUITO IMPORTANTE!
+'use client';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectFade, Parallax } from 'swiper/modules';
 import Link from 'next/link';
 
-// Importar os estilos do Swiper
+// Importar os estilos do Swiper é crucial
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -14,7 +14,6 @@ export default function Hero() {
   return (
     <section id="hero" className="relative">
       <Swiper
-        // Adiciona os módulos que vamos usar
         modules={[Navigation, Pagination, Autoplay, EffectFade, Parallax]}
         loop={true}
         effect="fade"
@@ -33,11 +32,11 @@ export default function Hero() {
           nextEl: '.hero-nav-next',
           prevEl: '.hero-nav-prev',
         }}
-        className="hero-swiper" // Classe para estilização customizada
+        className="hero-swiper"
       >
         <div className="swiper-wrapper">
-          {/* Slide 1 */}
           <SwiperSlide>
+            {/* Este caminho agora funciona porque a imagem está em /public/img/ */}
             <div className="slide-background" style={{ backgroundImage: "url('/img/banner.jpg')" }} data-swiper-parallax="-23%"></div>
             <div className="slide-content">
               <Link href="/lojas" className="cta-button bg-help-purple text-white" data-swiper-parallax="-100">
@@ -45,8 +44,6 @@ export default function Hero() {
               </Link>
             </div>
           </SwiperSlide>
-
-          {/* Slide 2 */}
           <SwiperSlide>
             <div className="slide-background" style={{ backgroundImage: "url('/img/nossahistoria.jpg')" }} data-swiper-parallax="-23%"></div>
             <div className="slide-content">
@@ -55,8 +52,6 @@ export default function Hero() {
               </Link>
             </div>
           </SwiperSlide>
-
-          {/* Slide 3 */}
           <SwiperSlide>
             <div className="slide-background" style={{ backgroundImage: "url('/img/trabalhe-conosco.jpg')" }} data-swiper-parallax="-23%"></div>
             <div className="slide-content">
@@ -66,8 +61,6 @@ export default function Hero() {
             </div>
           </SwiperSlide>
         </div>
-        
-        {/* Elementos de Navegação e Paginação */}
         <div className="swiper-button-prev hero-nav-prev"></div>
         <div className="swiper-button-next hero-nav-next"></div>
         <div className="swiper-pagination hero-pagination"></div>

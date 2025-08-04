@@ -1,6 +1,5 @@
-// app/lojas/page.jsx
-import { supabase } from '../../lib/supabaseClient'; // Caminho corrigido
-import StoreList from '../../components/StoreList'; // Caminho corrigido
+import { supabase } from '../../lib/supabaseClient'; 
+import StoreList from '../../components/StoreList'; 
 
 async function getStores() {
   const { data, error } = await supabase.from('lojas').select('*').order('name');
