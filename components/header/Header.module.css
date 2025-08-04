@@ -1,0 +1,78 @@
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  margin: 0 auto;
+  max-width: 1280px; /* Efeito do 'container' do Tailwind */
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space-x-4 */
+}
+
+.socialIconsContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* space-x-4 */
+  padding-left: 1rem; /* pl-4 */
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* space-x-8 */
+}
+
+/* Esconde a seção de links em telas pequenas (abaixo de 768px) */
+@media (max-width: 768px) {
+  .rightSection {
+    display: none;
+  }
+}
+
+.logoBtn {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.logoCredivix {
+
+  background-color: #F37021;
+}
+
+.logoHelp {
+
+  background-color: #000000;
+}
+
+.socialIcon {
+  color: #6B7281;
+  transition: color 0.2s ease-in-out;
+}
+
+.socialIcon:hover {
+  color: #111827;
+}
+
+.navLink {
+  color: #4B5563;
+  font-weight: 500;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  text-decoration: none; /* Garante que não haja sublinhado padrão */
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  color: #000000;
+  border-bottom-color: #F37021;
+}
