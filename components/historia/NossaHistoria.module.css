@@ -1,0 +1,74 @@
+/* Estilos modulares completos para o componente NossaHistoria */
+
+/* Container principal da seção */
+.section {
+  background-color: #ffffff;
+  padding-top: 4rem;    /* Equivalente a py-16 do Tailwind */
+  padding-bottom: 4rem;
+}
+@media (min-width: 768px) {
+  .section {
+    padding-top: 6rem;    /* Equivalente a md:py-24 */
+    padding-bottom: 6rem;
+  }
+}
+
+/* Container que centraliza o conteúdo */
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;  /* Equivalente a px-6 */
+  padding-right: 1.5rem;
+}
+
+/* O nosso container flexbox */
+.flexContainer {
+  display: flex;
+  align-items: center;
+  gap: 3rem; /* Espaçamento entre as colunas */
+  flex-direction: column; /* Empilha verticalmente em mobile (padrão) */
+}
+/* Em ecrãs maiores, muda para linha (lado a lado) */
+@media (min-width: 768px) {
+  .flexContainer {
+    flex-direction: row;
+  }
+}
+
+/* Colunas */
+.imageColumn, .textColumn {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .imageColumn, .textColumn {
+    width: 50%; /* Cada coluna ocupa metade do espaço em ecrãs maiores */
+  }
+}
+
+.textColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espaçamento entre os parágrafos */
+    color: #374151; /* text-gray-700 */
+}
+
+/* Estilo da imagem */
+.image {
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-xl */
+  width: 100%;
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+/* Estilos dos Títulos (que já tínhamos) */
+.mainHeading {
+  text-align: left;
+}
+
+.missionHeading {
+  color: #000000;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

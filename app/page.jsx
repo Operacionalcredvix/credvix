@@ -1,5 +1,5 @@
 import Hero from '../components/hero/Hero';
-import NossaHistoria from '../components/NossaHistoria'; // Importa o novo componente
+import NossaHistoria from '../components/historia/NossaHistoria';
 
 // Componente para a seção "Nossos Valores" para manter o código organizado
 function NossosValores() {
