@@ -1,0 +1,51 @@
+.jobGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1.5rem; /* NOVO VALOR (equivalente a 40px) */
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 768px) { /* md: */
+  .jobGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) { /* lg: */
+  .jobGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Estilos para os filtros */
+.filtersContainer {
+  max-width: 56rem; /* max-w-4xl */
+  margin: 0 auto 2.5rem; /* mx-auto mb-10 */
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 1 coluna em mobile */
+  gap: 1rem;
+}
+
+@media (min-width: 768px) { /* md: */
+  .filtersContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.filterGroup label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.filterSelect {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}

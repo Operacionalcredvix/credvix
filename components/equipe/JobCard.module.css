@@ -1,0 +1,143 @@
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  background-color: #ffffff;
+  padding: 0.5rem; /* REDUZIDO de 1.5rem para 0.5rem */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  border-color: #F37021;
+}
+
+
+.title {
+  font-size: 1rem; /* REDUZIDO de 1.125rem para 1rem */
+  font-weight: 700;
+  color: #1a202c;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+
+.applyButton {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #000000;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem; /* REDUZIDO de 0.6rem para 0.5rem */
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* ... (as classes de badge continuam iguais) ... */
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.badgeType {
+  background-color: #F37021;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.badgeCategory {
+  border: 1px solid;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.categoryOpen {
+  color: #28a745;
+  border-color: #28a745;
+  background-color: #e9f7ef;
+  border: 1px solid;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.categoryTalent {
+  color: #1e40af;
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+  border: 1px solid;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.body {
+  flex-grow: 1;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.location {
+  color: #4a5568; /* Cinza um pouco mais escuro para melhor contraste */
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  color: #718096; /* COR MAIS SUAVE para a descrição */
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-top: 0;
+}
+
+.applyButton {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #000000;
+  color: white;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease; /* TRANSIÇÃO MELHORADA */
+}
+
+.applyButton:hover {
+  background-color: #333333;
+  transform: scale(1.02); /* Adiciona um leve "zoom" no botão */
+}
