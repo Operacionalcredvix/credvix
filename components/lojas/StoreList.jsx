@@ -1,21 +1,17 @@
-// components/StoreList.jsx
-'use client'; // Componente de Cliente para interatividade
+'use client';
 
 import { useState, useMemo } from 'react';
 import StoreCard from './StoreCard';
+import styles from './StoreList.module.css';
 
 export default function StoreList({ stores }) {
-  // Estados para controlar os valores dos filtros
   const [stateFilter, setStateFilter] = useState('todos');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Gera a lista de estados únicos para o dropdown de filtro
   const availableStates = useMemo(() => {
-    // [...new Set()] cria um array com valores únicos
     return [...new Set(stores.map(store => store.state))].sort();
   }, [stores]);
 
-  // Filtra as lojas com base nos estados dos filtros
   const filteredStores = useMemo(() => {
     return stores.filter(store => {
       const matchesState = stateFilter === 'todos' || store.state === stateFilter;
@@ -27,22 +23,21 @@ export default function StoreList({ stores }) {
   }, [stores, stateFilter, searchTerm]);
 
   return (
-    <section id="encontre" className="py-16 md:py-24 bg-gray-50">
+    <section id="encontre" className={styles.filtersSection}>
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="section-title">Busque por sua cidade ou estado</h2>
           <p className="section-subtitle">Estamos presentes em todo o Brasil. Encontre a unidade mais próxima de você e fale com nossos especialistas.</p>
         </div>
 
-        {/* --- Filtros --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          <div>
-            <label htmlFor="state-select" className="block text-sm font-medium text-gray-700 mb-2">Filtrar por Estado:</label>
+        <div className={styles.filtersContainer}>
+          <div className={styles.filterGroup}>
+            <label htmlFor="state-select">Filtrar por Estado:</label>
             <select
               id="state-select"
-              className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 ring-help-purple"
-              value={stateFilter} // Controlado pelo estado do React
-              onChange={(e) => setStateFilter(e.target.value)} // Atualiza o estado quando o valor muda
+              className={styles.filterSelect}
+              value={stateFilter}
+              onChange={(e) => setStateFilter(e.target.value)}
             >
               <option value="todos">Todos os Estados</option>
               {availableStates.map(state => (
@@ -50,30 +45,27 @@ export default function StoreList({ stores }) {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="search-input" className="block text-sm font-medium text-gray-700 mb-2">Buscar por cidade ou nome:</label>
-            <div className="relative">
-              <input
-                type="text"
-                id="search-input"
-                className="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 ring-help-purple"
-                placeholder="Digite para buscar..."
-                value={searchTerm} // Controlado pelo estado do React
-                onChange={(e) => setSearchTerm(e.target.value)} // Atualiza o estado quando o valor muda
-              />
-            </div>
+          <div className={styles.filterGroup}>
+            <label htmlFor="search-input">Buscar por cidade ou nome:</label>
+            <input
+              type="text"
+              id="search-input"
+              className={styles.filterInput}
+              placeholder="Digite para buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
 
-        {/* --- Grid de Lojas --- */}
         {filteredStores.length > 0 ? (
-          <div id="store-list" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className={styles.storeGrid}>
             {filteredStores.map(store => (
               <StoreCard key={store.id} store={store} />
             ))}
           </div>
         ) : (
-          <div id="no-stores-message" className="text-center text-gray-500 mt-8">
+          <div className="text-center text-gray-500 mt-8">
             <p>Nenhuma loja encontrada para a sua busca.</p>
           </div>
         )}

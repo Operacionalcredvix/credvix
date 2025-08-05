@@ -1,5 +1,5 @@
 import { supabase } from '../../lib/supabaseClient'; 
-import StoreList from '../../components/StoreList'; 
+import StoreList from '../../components/lojas/StoreList'; 
 
 async function getStores() {
   const { data, error } = await supabase.from('lojas').select('*').order('name');
