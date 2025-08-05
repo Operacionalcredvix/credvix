@@ -1,5 +1,6 @@
 import styles from './JobCard.module.css';
 
+// Este componente recebe a função 'onApply' como uma propriedade (prop)
 export default function JobCard({ job, onApply }) {
   const categoryClass = job.job_category === 'Banco de Talentos' 
     ? styles.categoryTalent 
@@ -18,9 +19,9 @@ export default function JobCard({ job, onApply }) {
       <div className={styles.body}>
         <h3 className={styles.title}>{job.title}</h3>
         <p className={styles.location}>{storeName} - {city}, {state}</p>
-        {/* A linha da descrição foi removida daqui */}
       </div>
       <div className="mt-auto">
+        {/* O onClick aqui chama a função 'onApply' que foi passada pelo JobList */}
         <button 
             className={styles.applyButton}
             onClick={() => onApply(job.title, storeName, job.id)}
