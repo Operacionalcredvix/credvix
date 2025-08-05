@@ -1,6 +1,7 @@
 // app/vagas/page.jsx
 import { supabase } from '../../lib/supabaseClient'; // Usando caminho relativo
 import JobList from '../../components/JobList'; // Usando caminho relativo
+import Depoimentos from '@/components/depoimentos/Depoimentos';
 
 // Função que busca os dados no servidor
 async function getActiveJobs() {
@@ -43,6 +44,7 @@ export default async function VagasPage() {
 
   return (
     <>
+    <Depoimentos />
       {/* Aqui você pode colar as seções estáticas se desejar, como depoimentos e benefícios */}
       {/* {topSections} */}
       
