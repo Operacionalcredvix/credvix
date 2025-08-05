@@ -1,7 +1,9 @@
 import { Inter, Poppins } from 'next/font/google';
-import './globals.css'; // Mantemos os estilos globais
+import '../globals.css';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 
-// As suas definições de fontes continuam aqui
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -15,21 +17,24 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-// A metadata também pode ficar aqui
 export const metadata = {
   title: 'Credvix & Help! - Crédito Consignado',
   description: 'Há 13 anos oferecendo as melhores soluções em crédito consignado...',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.ico', // Garante que o favicon seja encontrado
   },
 };
 
-// Este é o novo Layout Raiz. Note que ele NÃO tem Header nem Footer.
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        {/* <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Rounded" rel="stylesheet" /> */}
+      </head>
       <body>
-        {children}
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

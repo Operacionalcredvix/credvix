@@ -1,6 +1,6 @@
 // app/vagas/page.jsx
-import { supabase } from '../../lib/supabaseClient'; // Usando caminho relativo
-import JobList from '../../components/equipe/JobList';
+import { supabase } from '../../../lib/supabaseClient'; // Usando caminho relativo
+import JobList from '../../../components/equipe/JobList';
 import Depoimentos from '/components/depoimentos/Depoimentos';
 import NossosBeneficios from '/components/beneficios/NossosBeneficios'; // Importando o componente de benefícios
 

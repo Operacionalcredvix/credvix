@@ -1,5 +1,5 @@
-import { supabase } from '../../lib/supabaseClient'; 
-import StoreList from '../../components/lojas/StoreList';
+import { supabase } from '../../../lib/supabaseClient'; 
+import StoreList from '../../../components/lojas/StoreList';
 import styles from './LojasPage.module.css'; // 1. Importa o nosso novo módulo de estilos
 
 // A função para buscar os dados no servidor continua igual
