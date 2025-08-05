@@ -1,0 +1,46 @@
+
+.mapSection {
+  /* width: 100%; */
+  min-height: 100vh; /* A MÁGICA ACONTECE AQUI: altura mínima de 100% da tela */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 2rem; /* Espaçamento para o conteúdo não colar nas bordas em telas pequenas */
+  text-align: center;
+}
+
+/* .mapImageContainer {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+} */
+
+.mapImage {
+  max-width: 24rem; /* Limita o tamanho máximo do mapa */
+  width: 100%;
+  height: auto;
+}
+
+.subtitle {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  color: #4b5563; /* text-gray-600 */
+}
+
+
+/* Adicione este novo bloco de código */
+.pageTitle {
+  font-family: var(--font-poppins);
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 1rem;
+  /* Tamanhos de fonte maiores */
+  font-size: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 3.5rem;
+  }
+}

@@ -1,6 +1,8 @@
 import { supabase } from '../../lib/supabaseClient'; 
-import StoreList from '../../components/lojas/StoreList'; 
+import StoreList from '../../components/lojas/StoreList';
+import styles from './LojasPage.module.css'; // 1. Importa o nosso novo módulo de estilos
 
+// A função para buscar os dados no servidor continua igual
 async function getStores() {
   const { data, error } = await supabase.from('lojas').select('*').order('name');
   if (error) {
@@ -14,17 +16,23 @@ export default async function LojasPage() {
   const stores = await getStores();
   return (
     <>
-      <section id="mapa-lojas" className="py-16 md:py-20 bg-white">
-        <div className="container mx-auto px-6 text-center">
+      {/* 2. Aplicamos a nossa nova classe de ecrã inteiro */}
+      <section id="mapa-lojas" className={styles.mapSection}>
+        {/* O container interno agora é um 'div' simples, pois a section já centraliza tudo */}
+        <div>
           <h1 className="section-title">Encontre nossa loja mais próxima</h1>
-          <div className="my-8">
-            <img src="/img/Mapa.png" alt="Mapa do Brasil com os estados de atuação da Credvix" className="mx-auto max-w-lg w-full h-auto" />
+          
+          <div className={styles.mapImageContainer}>
+            <img src="/img/Mapa.png" alt="Mapa do Brasil com os estados de atuação da Credvix" className={styles.mapImage} />
           </div>
-          <p className="text-lg font-semibold text-gray-600">
+          
+          <p className={styles.subtitle}>
             Maior franqueado ES da HELP! Onde chegamos: ES, MG, GO, BA, MT, DF
           </p>
         </div>
       </section>
+
+      {/* A lista de lojas continua a funcionar como antes */}
       <StoreList stores={stores} />
     </>
   );
