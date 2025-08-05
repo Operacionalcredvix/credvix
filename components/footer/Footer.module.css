@@ -1,26 +1,81 @@
-
+/* Estilos modulares completos para o Footer.jsx */
 
 .footer {
-  background-color: #1f2937; /* Fundo escuro do rodapé */
+  background-color: #1f2937;
+  color: #ffffff;
+  padding: 4rem 1.5rem 2rem; /* pt-16 px-6 pb-8 */
 }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.gridContainer {
+  display: grid;
+  gap: 2.5rem; /* gap-10 */
+  margin-bottom: 2.5rem; /* mb-10 */
+  grid-template-columns: repeat(1, 1fr); /* 1 coluna em mobile */
+}
+
+@media (min-width: 768px) { /* md: */
+  .gridContainer {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablet */
+  }
+}
+
+@media (min-width: 1024px) { /* lg: */
+  .gridContainer {
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas em desktop */
+  }
+}
+
+.logoColumn {
+    grid-column: span 1 / span 1;
+}
+@media (min-width: 768px) { /* md: */
+    .logoColumn {
+        grid-column: span 2 / span 2;
+    }
+}
+@media (min-width: 1024px) { /* lg: */
+    .logoColumn {
+        grid-column: span 1 / span 1;
+    }
+}
+
+.contactColumn {
+    grid-column: span 1 / span 1;
+}
+@media (min-width: 768px) { /* md: */
+    .contactColumn {
+        grid-column: span 2 / span 2;
+    }
+}
+@media (min-width: 1024px) { /* lg: */
+    .contactColumn {
+        grid-column: span 2 / span 2;
+    }
+}
+
 
 .brandText {
   font-weight: bold;
 }
 
 .description {
-  color: #9ca3af; /* cinza-400 */
-  font-size: 0.875rem; /* text-sm */
-  margin-bottom: 1.5rem; /* mb-6 */
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
 }
 
 .socialIconsContainer {
   display: flex;
-  gap: 1rem; /* space-x-4 */
+  gap: 1rem;
 }
 
 .socialIcon {
-  color: #9ca3af; /* cinza-400 */
+  color: #9ca3af;
   transition: color 0.3s, transform 0.3s;
 }
 
@@ -30,31 +85,31 @@
 }
 
 .heading {
-  font-weight: 600; /* semibold */
-  font-size: 1.125rem; /* text-lg */
-  margin-bottom: 1rem; /* mb-4 */
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
   color: #ffffff;
   text-transform: uppercase;
-  letter-spacing: 0.05em; /* tracking-wider */
+  letter-spacing: 0.05em;
 }
 
 .quickLinksList {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* space-y-3 */
-  color: #9ca3af; /* cinza-400 */
+  gap: 0.75rem;
+  color: #9ca3af;
 }
 
-.quickLinksList a:hover {
+/* .quickLinksList a:hover {
   color: #ffffff;
   transition: color 0.3s;
-}
+} */
 
 .contactList {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* space-y-4 */
-    color: #9ca3af; /* cinza-400 */
+    gap: 1rem;
+    color: #9ca3af;
 }
 
 .contactItem {
@@ -63,20 +118,32 @@
 }
 
 .contactIcon {
-    margin-right: 0.75rem; /* mr-3 */
-    margin-top: 0.25rem; /* mt-1 */
-    color: #F37021; /* Cor laranja da Credvix */
+    margin-right: 0.75rem;
+    margin-top: 0.25rem;
+    color: #F37021;
     flex-shrink: 0;
 }
 
 .divider {
-    border-top: 1px solid #374151; /* gray-700 */
-    padding-top: 1.5rem; /* pt-6 */
-    margin-top: 1.5rem; /* mt-6 */
+    border-top: 1px solid #374151;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .copyrightText {
     text-align: center;
-    color: #6b7280; /* gray-500 */
-    font-size: 0.875rem; /* text-sm */
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.apisLogo {
+    height: 3rem; /* Equivalente a h-12 do Tailwind */
+    margin: 0 auto; /* Centraliza a imagem */
+}
+
+.apisSection {
+    margin-top: 2.5rem; /* mt-10 */
+    padding-top: 1.5rem; /* pt-6 */
+    border-top: 1px solid #374151; /* border-t border-gray-700 */
+    text-align: center;
 }
