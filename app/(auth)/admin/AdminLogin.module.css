@@ -1,0 +1,56 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* bg-gray-100 */
+}
+
+.logo {
+  height: 15rem; /* h-16 */
+  width: 15rem; /* w-16 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700; /* font-bold */
+  margin-bottom: 1.5rem; /* mb-6 */
+  color: #1f2937;
+}
+
+.form {
+  width: 100%;
+  max-width: 20rem; /* max-w-xs */
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+
+.button {
+  width: 100%;
+  background-color: #2563eb; /* bg-blue-600 */
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #1d4ed8; /* hover:bg-blue-700 */
+}
+
+.errorMessage {
+  color: #dc2626; /* text-red-600 */
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}

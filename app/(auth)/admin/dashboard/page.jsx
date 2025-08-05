@@ -2,8 +2,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../../../lib/supabaseClient';
-import JobModal from '../../../components/admin/JobModal';
+import { supabase } from '../../../../lib/supabaseClient';
+import JobModal from '../../../../components/admin/JobModal';
 
 export default function VagasAdminPage() {
   const [jobs, setJobs] = useState([]);
