@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './Footer.module.css';
+import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaClock } from 'react-icons/fa';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -45,19 +46,20 @@ export default function Footer() {
             <h3 className={styles.heading}>Contato</h3>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
-                <span className={`${styles.contactIcon} material-icons`}>location_on</span>
+                {/* 2. Substituir o <span> pelo componente do ícone */}
+                <FaMapMarkerAlt className={styles.contactIcon} />
                 <span>Presente em 6 Estados do Brasil</span>
               </li>
               <li className={`${styles.contactItem} items-center`}>
-                <span className={`${styles.contactIcon} material-icons`}>email</span>
+                <FaEnvelope className={styles.contactIcon} />
                 <a href="mailto:contato@credvix.com" className="hover:text-white transition-colors">contato@credvix.com</a>
               </li>
               <li className={`${styles.contactItem} items-center`}>
-                <span className={`${styles.contactIcon} material-icons`}>call</span>
+                <FaPhone className={styles.contactIcon} />
                 <a href="tel:+552730208584" className="hover:text-white transition-colors">(27) 3020-8584</a>
               </li>
               <li className={styles.contactItem}>
-                <span className={`${styles.contactIcon} material-icons`}>schedule</span>
+                <FaClock className={styles.contactIcon} />
                 <span>Matriz: Segunda a Sexta, 9h às 18h<br /><span className="text-xs text-gray-500">Demais lojas seguem o horário local.</span></span>
               </li>
             </ul>

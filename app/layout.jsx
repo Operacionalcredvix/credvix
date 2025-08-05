@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${poppins.variable}`}>
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+        {/* <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Rounded" rel="stylesheet" /> */}
       </head>
       <body>
         <Header />

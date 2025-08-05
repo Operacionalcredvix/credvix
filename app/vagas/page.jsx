@@ -1,7 +1,8 @@
 // app/vagas/page.jsx
 import { supabase } from '../../lib/supabaseClient'; // Usando caminho relativo
 import JobList from '../../components/JobList'; // Usando caminho relativo
-import Depoimentos from '@/components/depoimentos/Depoimentos';
+import Depoimentos from '/components/depoimentos/Depoimentos';
+import NossosBeneficios from '/components/beneficios/NossosBeneficios'; // Importando o componente de benefícios
 
 // Função que busca os dados no servidor
 async function getActiveJobs() {
@@ -30,13 +31,13 @@ export default async function VagasPage() {
   const topSections = (
     <>
       <section id="depoimentos" className="py-16 md:py-24 bg-white">
-        {/* ... Cole aqui o conteúdo da seção 'Depoimentos' do seu vagas.html ... */}
+        <Depoimentos />
       </section>
       <div className="text-center mt-16 md:mt-24 mb-16">
         <h2 className="section-title">Nossos Benefícios</h2>
         <p className="section-subtitle">Fique por dentro dos Beneficios para colaboradores Credvix.</p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
-          {/* ... Cole aqui o conteúdo da seção 'Benefícios' ... */}
+          <NossosBeneficios />
         </div>
       </div>
     </>
@@ -45,10 +46,7 @@ export default async function VagasPage() {
   return (
     <>
     <Depoimentos />
-      {/* Aqui você pode colar as seções estáticas se desejar, como depoimentos e benefícios */}
-      {/* {topSections} */}
-      
-      {/* Renderizamos o componente de cliente JobList e passamos as vagas */}
+    <NossosBeneficios />
       <JobList jobs={activeJobs} />
     </>
   );
