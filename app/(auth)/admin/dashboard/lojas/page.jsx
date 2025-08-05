@@ -2,8 +2,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../../../../lib/supabaseClient';
-import StoreModal from '../../../../components/admin/StoreModal';
+import { supabase } from '../../../../../lib/supabaseClient';
+import StoreModal from '../../../../../components/admin/StoreModal';
 
 export default function LojasAdminPage() {
   const [stores, setStores] = useState([]);
