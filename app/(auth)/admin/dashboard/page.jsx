@@ -1,26 +1,33 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '../../../../lib/supabaseClient';
 import JobModal from '../../../../components/admin/JobModal';
-import StatCard from '../../../../components/admin/StatCard'; // Importa o nosso novo StatCard
+import StatCard from '../../../../components/admin/StatCard';
+import JobCardAdmin from '../../../../components/admin/JobCardAdmin';
 
-// Importar os ícones que vamos usar
+// Importar os ícones
 import { Briefcase, CheckCircle2, XCircle } from 'lucide-react';
 
 // Importar os componentes do shadcn/ui
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export default function VagasAdminPage() {
-  const [jobs, setJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingJob, setEditingJob] = useState(null);
-  
+
+  // 1. Estados para os nossos filtros
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ativas'); // Padrão para "Apenas Ativas"
+  const [categoryFilter, setCategoryFilter] = useState('todas');
+
   const [stats, setStats] = useState({
     totalJobs: 0,
     activeJobs: 0,
@@ -29,7 +36,8 @@ export default function VagasAdminPage() {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    
+
+    // Busca vagas e lojas em paralelo para mais eficiência
     const [jobsResponse, storesResponse] = await Promise.all([
       supabase.from('vagas').select(`*, lojas(name, city, state), candidatos(count)`).order('created_at', { ascending: false }),
       supabase.from('lojas').select('*').order('name')
@@ -44,7 +52,7 @@ export default function VagasAdminPage() {
         inactiveJobs: allJobs.filter(j => !j.is_active).length,
       });
     }
-    
+
     if (storesResponse.data) {
       setStores(storesResponse.data);
     }
@@ -56,67 +64,143 @@ export default function VagasAdminPage() {
     fetchData();
   }, [fetchData]);
 
-  // As suas outras funções (handleOpenModal, handleCloseModal, etc.) continuam iguais
+  // 2. Lógica de filtragem
+  const filteredJobs = useMemo(() => {
+    return allJobs.filter(job => {
+      // Filtro de Status
+      const matchesStatus = statusFilter === 'todas' || (statusFilter === 'ativas' && job.is_active) || (statusFilter === 'inativas' && !job.is_active);
+
+      // Filtro de Categoria
+      const matchesCategory = categoryFilter === 'todas' || job.job_category === categoryFilter;
+
+      // Filtro de Pesquisa (Título ou Loja)
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      const matchesSearch = !searchTerm ||
+        job.title.toLowerCase().includes(lowerSearchTerm) ||
+        (job.lojas && job.lojas.name.toLowerCase().includes(lowerSearchTerm));
+
+      return matchesStatus && matchesCategory && matchesSearch;
+    });
+  }, [allJobs, searchTerm, statusFilter, categoryFilter]);
+
+
   const handleOpenModal = (job = null) => { setIsModalOpen(true); setEditingJob(job); };
   const handleCloseModal = () => { setIsModalOpen(false); setEditingJob(null); };
-  const handleSaveJob = async (jobData) => { /* ...código existente... */ await fetchData(); };
-  const handleDeleteJob = async (job) => { /* ...código existente... */ await fetchData(); };
 
-  return (
-    <div className="flex flex-col gap-8">
-      {/* Grelha para os cartões de estatísticas */}
+  const handleSaveJob = async (jobData) => {
+    let error;
+    if (editingJob) {
+      ({ error } = await supabase.from('vagas').update(jobData).eq('id', editingJob.id));
+    } else {
+      ({ error } = await supabase.from('vagas').insert([jobData]));
+    }
+
+    if (error) {
+      alert('Erro ao salvar a vaga: ' + error.message);
+    } else {
+      handleCloseModal();
+      await fetchData();
+    }
+  };
+
+  const handleDeleteJob = async (job) => {
+    const candidateCount = job.candidatos[0]?.count || 0;
+    if (candidateCount > 0) {
+      alert(`Não é possível excluir esta vaga, pois ela possui ${candidateCount} candidatura(s).`);
+      return;
+    }
+
+    if (window.confirm(`Tem certeza que deseja excluir a vaga "${job.title}"?`)) {
+      const { error } = await supabase.from('vagas').delete().eq('id', job.id);
+      if (error) {
+        alert('Erro ao excluir a vaga: ' + error.message);
+      } else {
+        await fetchData();
+      }
+    }
+  };
+
+return (
+    <div className="flex flex-col gap-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <StatCard title="Total de Vagas" value={loading ? '...' : stats.totalJobs} icon={Briefcase} />
         <StatCard title="Vagas Ativas" value={loading ? '...' : stats.activeJobs} icon={CheckCircle2} />
         <StatCard title="Vagas Inativas" value={loading ? '...' : stats.inactiveJobs} icon={XCircle} />
       </div>
 
+      {/* 3. O nosso novo Painel de Filtros */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="grid gap-4 md:grid-cols-4">
+            <div className="grid gap-2">
+              <Label htmlFor="search">Buscar</Label>
+              <Input 
+                id="search" 
+                placeholder="Título ou loja..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="cargo">Cargo</Label>
+              {/* O filtro por cargo pode ser implementado da mesma forma se necessário */}
+              <Select>
+                <SelectTrigger id="cargo">
+                  <SelectValue placeholder="Todos os Cargos" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos os Cargos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="status">Status</Label>
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger id="status">
+                  <SelectValue placeholder="Selecione o Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todas">Todos</SelectItem>
+                  <SelectItem value="ativas">Apenas Ativas</SelectItem>
+                  <SelectItem value="inativas">Apenas Inativas</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="categoria">Categoria</Label>
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger id="categoria">
+                  <SelectValue placeholder="Selecione a Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todas">Todas</SelectItem>
+                  <SelectItem value="Aberta">Vaga Aberta</SelectItem>
+                  <SelectItem value="Banco de Talentos">Banco de Talentos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
       <div className="flex justify-end gap-2">
-        <Button variant="outline"> + Adicionar ao Banco de Talentos</Button>
+        <Button variant="outline">+ Adicionar ao Banco de Talentos</Button>
         <Button onClick={() => handleOpenModal()}>+ Criar Nova Vaga</Button>
       </div>
 
-      <Card>
-        {/* A sua tabela de vagas continua aqui, sem alterações */}
-        <CardHeader>
-          <CardTitle>Vagas Publicadas</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Título da Vaga</TableHead>
-                <TableHead>Loja</TableHead>
-                <TableHead>Candidatos</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                <TableRow><TableCell colSpan="5" className="text-center">Carregando vagas...</TableCell></TableRow>
-              ) : (
-                jobs.map(job => (
-                  <TableRow key={job.id}>
-                    <TableCell className="font-medium">{job.title}</TableCell>
-                    <TableCell>{job.lojas ? job.lojas.name : 'N/A'}</TableCell>
-                    <TableCell>{job.candidatos[0]?.count || 0}</TableCell>
-                    <TableCell>
-                      <Badge variant={job.is_active ? "default" : "destructive"}>
-                        {job.is_active ? 'Ativa' : 'Inativa'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleOpenModal(job)}>Editar</Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDeleteJob(job)}>Excluir</Button>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      {/* A nossa grelha de cartões agora usa 'filteredJobs' */}
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {loading ? <p>Carregando vagas...</p> : 
+          filteredJobs.map(job => (
+            <JobCardAdmin 
+              key={job.id} 
+              job={job} 
+              onEdit={handleOpenModal}
+              onDelete={handleDeleteJob}
+            />
+          ))
+        }
+      </div>
       
       <JobModal
         isOpen={isModalOpen}
