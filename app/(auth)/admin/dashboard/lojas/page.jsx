@@ -1,9 +1,13 @@
-// app/admin/dashboard/lojas/page.jsx
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../../../../lib/supabaseClient';
 import StoreModal from '../../../../../components/admin/StoreModal';
+
+// Importar os componentes do shadcn/ui que vamos usar
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function LojasAdminPage() {
   const [stores, setStores] = useState([]);
@@ -15,7 +19,7 @@ export default function LojasAdminPage() {
     setLoading(true);
     const { data, error } = await supabase
       .from('lojas')
-      .select(`*, vagas(count)`) // Pega a contagem de vagas relacionadas
+      .select(`*, vagas(count)`)
       .order('name', { ascending: true });
       
     if (error) {
@@ -43,10 +47,8 @@ export default function LojasAdminPage() {
   const handleSaveStore = async (storeData) => {
     let error;
     if (editingStore) {
-      // Atualizar loja existente
       ({ error } = await supabase.from('lojas').update(storeData).eq('id', editingStore.id));
     } else {
-      // Criar nova loja
       ({ error } = await supabase.from('lojas').insert([storeData]));
     }
 
@@ -54,7 +56,7 @@ export default function LojasAdminPage() {
       alert('Erro ao salvar a loja: ' + error.message);
     } else {
       handleCloseModal();
-      await fetchStores(); // Atualiza a lista de lojas
+      await fetchStores();
     }
   };
   
@@ -70,49 +72,53 @@ export default function LojasAdminPage() {
       if (error) {
         alert('Erro ao excluir a loja: ' + error.message);
       } else {
-        await fetchStores(); // Atualiza a lista de lojas
+        await fetchStores();
       }
     }
   };
 
-  return (
-    <div>
-      <header className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Gestão de Lojas</h1>
-        <button onClick={() => handleOpenModal()} className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">
+return (
+    <div className="flex flex-col gap-8">
+      <div className="flex justify-end">
+        <Button onClick={() => handleOpenModal()}>
           + Criar Nova Loja
-        </button>
-      </header>
-
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-4 text-left">Nome da Loja</th>
-              <th className="p-4 text-left">Cidade / Estado</th>
-              <th className="p-4 text-left">Vagas Vinculadas</th>
-              <th className="p-4 text-left">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr><td colSpan="4" className="p-4 text-center">Carregando lojas...</td></tr>
-            ) : (
-              stores.map(store => (
-                <tr key={store.id} className="border-b">
-                  <td className="p-4 font-medium">{store.name}</td>
-                  <td className="p-4">{store.city} / {store.state}</td>
-                  <td className="p-4">{store.vagas[0]?.count || 0}</td>
-                  <td className="p-4 space-x-2">
-                    <button onClick={() => handleOpenModal(store)} className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Editar</button>
-                    <button onClick={() => handleDeleteStore(store)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Excluir</button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        </Button>
       </div>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle>Lojas Cadastradas</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Nome da Loja</TableHead>
+                <TableHead>Cidade / Estado</TableHead>
+                <TableHead>Vagas Vinculadas</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
+                <TableRow><TableCell colSpan="4" className="text-center">Carregando lojas...</TableCell></TableRow>
+              ) : (
+                stores.map(store => (
+                  <TableRow key={store.id}>
+                    <TableCell className="font-medium">{store.name}</TableCell>
+                    <TableCell>{store.city} / {store.state}</TableCell>
+                    <TableCell>{store.vagas[0]?.count || 0}</TableCell>
+                    <TableCell className="text-right space-x-2">
+                      <Button variant="outline" size="sm" onClick={() => handleOpenModal(store)}>Editar</Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDeleteStore(store)}>Excluir</Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
       
       <StoreModal
         isOpen={isModalOpen}

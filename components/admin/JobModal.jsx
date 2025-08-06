@@ -1,9 +1,15 @@
-// components/admin/JobModal.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
 
-// Recebemos a lista de lojas como uma 'prop' para popular o dropdown
+// Importar os componentes shadcn/ui que vamos usar
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+
 export default function JobModal({ isOpen, onClose, job, onSave, stores = [] }) {
   const [title, setTitle] = useState('');
   const [lojaId, setLojaId] = useState('');
@@ -16,7 +22,7 @@ export default function JobModal({ isOpen, onClose, job, onSave, stores = [] }) 
   useEffect(() => {
     if (job) {
       setTitle(job.title || '');
-      setLojaId(job.loja_id || '');
+      setLojaId(job.loja_id?.toString() || '');
       setType(job.type || '');
       setDescription(job.description || '');
       setJobCategory(job.job_category || 'Aberta');
@@ -35,7 +41,7 @@ export default function JobModal({ isOpen, onClose, job, onSave, stores = [] }) 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
-    const selectedStore = stores.find(s => s.id == lojaId);
+    const selectedStore = stores.find(s => s.id.toString() === lojaId);
     const jobData = {
       title,
       loja_id: lojaId,
@@ -51,42 +57,67 @@ export default function JobModal({ isOpen, onClose, job, onSave, stores = [] }) 
     setIsSaving(false);
   };
 
-  if (!isOpen) return null;
-
+  // O componente Dialog do shadcn controla a sua visibilidade através da prop 'open'
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
-        <h2 className="text-2xl font-bold mb-6">{job ? 'Editar Vaga' : 'Criar Nova Vaga'}</h2>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>{job ? 'Editar Vaga' : 'Criar Nova Vaga'}</DialogTitle>
+        </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <input type="text" placeholder="Título da Vaga" value={title} onChange={e => setTitle(e.target.value)} required className="p-2 border rounded" />
-            <select value={lojaId} onChange={e => setLojaId(e.target.value)} required className="p-2 border rounded bg-white">
-              <option value="" disabled>Selecione a Loja</option>
-              {stores.map(store => (
-                <option key={store.id} value={store.id}>{store.name}</option>
-              ))}
-            </select>
-            <input type="text" placeholder="Tipo (ex: Tempo Integral)" value={type} onChange={e => setType(e.target.value)} required className="p-2 border rounded" />
-            <select value={jobCategory} onChange={e => setJobCategory(e.target.value)} required className="p-2 border rounded bg-white">
-              <option value="Aberta">Vaga Aberta</option>
-              <option value="Banco de Talentos">Banco de Talentos</option>
-            </select>
-          </div>
-          <textarea placeholder="Descrição da Vaga" value={description} onChange={e => setDescription(e.target.value)} rows="4" className="w-full p-2 border rounded mb-4"></textarea>
-          <div className="flex items-center justify-between mt-6">
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} className="h-4 w-4" />
-              <span>Vaga Ativa</span>
-            </label>
-            <div className="flex justify-end space-x-4">
-              <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</button>
-              <button type="submit" disabled={isSaving} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-blue-300">
-                {isSaving ? 'Salvando...' : 'Salvar Vaga'}
-              </button>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">Título</Label>
+              <Input id="title" value={title} onChange={e => setTitle(e.target.value)} className="col-span-3" required />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="loja" className="text-right">Loja</Label>
+              <Select value={lojaId} onValueChange={setLojaId}>
+                <SelectTrigger id="loja" className="col-span-3">
+                  <SelectValue placeholder="Selecione a Loja" />
+                </SelectTrigger>
+                <SelectContent>
+                  {stores.map(store => (
+                    <SelectItem key={store.id} value={store.id.toString()}>{store.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="type" className="text-right">Tipo</Label>
+              <Input id="type" value={type} onChange={e => setType(e.target.value)} className="col-span-3" placeholder="Ex: Tempo Integral" required />
+            </div>
+             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">Categoria</Label>
+               <Select value={jobCategory} onValueChange={setJobCategory}>
+                <SelectTrigger id="category" className="col-span-3">
+                  <SelectValue placeholder="Selecione a Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                   <SelectItem value="Aberta">Vaga Aberta</SelectItem>
+                   <SelectItem value="Banco de Talentos">Banco de Talentos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="description" className="text-right pt-2">Descrição</Label>
+              <Textarea id="description" value={description} onChange={e => setDescription(e.target.value)} className="col-span-3" rows={5} />
+            </div>
+            <div className="flex items-center space-x-2 justify-end">
+                <input type="checkbox" id="isActive" checked={isActive} onChange={e => setIsActive(e.target.checked)} className="h-4 w-4" />
+                <Label htmlFor="isActive">Vaga Ativa</Label>
             </div>
           </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">Cancelar</Button>
+            </DialogClose>
+            <Button type="submit" disabled={isSaving}>
+              {isSaving ? 'Salvando...' : 'Salvar Vaga'}
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
